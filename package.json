@@ -1,5 +1,4 @@
 {
-  "private": true,
   "name": "@yuanqing/build-website",
   "version": "0.0.0",
   "publishConfig": {

@@ -131,16 +131,18 @@ function parseOutPattern(
     options.baseUrl,
     typeof outPattern === 'string' ? outPattern : outPattern[1]
   )
-  const url = path.join(options.baseUrl, typeof outPattern === 'string' ? outPattern : outPattern[0])
+  const url = path.join(
+    options.baseUrl,
+    typeof outPattern === 'string' ? outPattern : outPattern[0]
+  )
   return function (object: Record<string, any>) {
-    return (object.id === constants.dataIndexId ? indexUrl : url).replace(
-      interpolatedValueRegex,
-      function (_, key: string): string {
+    return (object.id === constants.dataIndexId ? indexUrl : url)
+      .replace(interpolatedValueRegex, function (_, key: string): string {
         if (typeof object[key] === 'undefined') {
           throw new Error('`object[key]` is `undefined`')
         }
         return object[key]
-      }
-    ).replace(/\/index\.html$/, '/')
+      })
+      .replace(/\/index\.html$/, '/')
   }
 }

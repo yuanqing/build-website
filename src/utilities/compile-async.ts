@@ -1,5 +1,5 @@
-import fs from 'fs-extra'
 import esbuild from 'esbuild'
+import fs from 'fs-extra'
 import path from 'path'
 
 import { Config } from './types.js'

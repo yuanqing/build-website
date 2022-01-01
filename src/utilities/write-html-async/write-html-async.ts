@@ -106,7 +106,10 @@ export async function writeHtmlAsync(options: {
         },
         toc: renderedToc
       })
-      const outputFilePath = path.extname(rest.url) === '.html' ? path.join(buildDirectory, rest.url) : path.join(buildDirectory, rest.url, 'index.html')
+      const outputFilePath =
+        path.extname(rest.url) === '.html'
+          ? path.join(buildDirectory, rest.url)
+          : path.join(buildDirectory, rest.url, 'index.html')
       await fs.outputFile(
         outputFilePath,
         minify === true

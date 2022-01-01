@@ -44,6 +44,7 @@
     "hast-util-to-string": "^2.0.0",
     "html-minifier": "^4.0.0",
     "kleur": "^4.1.4",
+    "lint-staged": "^12.1.4",
     "lodash.template": "^4.5.0",
     "mdast-util-to-markdown": "^1.2.6",
     "param-case": "^3.0.4",
@@ -56,6 +57,7 @@
     "remark-parse": "^10.0.1",
     "remark-rehype": "^10.1.0",
     "sade": "^1.7.4",
+    "simple-git-hooks": "^2.7.0",
     "strip-indent": "^4.0.0",
     "unified": "^10.1.1",
     "unist-util-visit": "^4.1.0"
@@ -86,5 +88,14 @@
   "eslintConfig": {
     "extends": "eslint-config-yuanqing"
   },
-  "prettier": "eslint-config-yuanqing/prettier"
+  "lint-staged": {
+    "*.ts": [
+      "eslint"
+    ]
+  },
+  "prettier": "eslint-config-yuanqing/prettier",
+  "simple-git-hooks": {
+    "pre-commit": "yarn run lint-staged",
+    "pre-push": "yarn run lint && yarn run fix && yarn run build"
+  }
 }

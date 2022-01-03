@@ -6,15 +6,15 @@ import { constants } from './constants.js'
 import { Config } from './types.js'
 
 export async function compileJsAsync(
-  options: { directory: string; minify: boolean } & Pick<
+  options: { jsDirectory: string; minify: boolean } & Pick<
     Config,
     'baseUrl' | 'buildDirectory'
   >
 ): Promise<null | string> {
-  const { baseUrl, buildDirectory, directory, minify } = options
-  let entryPoint = path.join(directory, constants.jsFileName)
+  const { baseUrl, buildDirectory, jsDirectory, minify } = options
+  let entryPoint = path.join(jsDirectory, constants.jsFileName)
   if ((await fs.pathExists(entryPoint)) === false) {
-    entryPoint = path.join(directory, constants.jsTypeScriptFileName)
+    entryPoint = path.join(jsDirectory, constants.jsTypeScriptFileName)
     if ((await fs.pathExists(entryPoint)) === false) {
       return null
     }

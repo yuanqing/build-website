@@ -10,13 +10,18 @@ import { parseToc } from './parse-toc.js'
 const interpolatedValueRegex = /\[ *([^\]]+) *\]/g
 
 export async function readDataAsync(
-  dataConfig: Config['data'],
   options: Pick<
     Config,
-    'baseUrl' | 'createTocText' | 'dataDirectory' | 'filterToc'
+    'baseUrl' | 'data' | 'createTocText' | 'dataDirectory' | 'filterToc'
   >
 ): Promise<Record<string, Array<Record<string, any>>>> {
-  const { baseUrl, createTocText, dataDirectory, filterToc } = options
+  const {
+    baseUrl,
+    createTocText,
+    data: dataConfig,
+    dataDirectory,
+    filterToc
+  } = options
   const result: Record<string, Array<Record<string, any>>> = {}
   for (const dataType in dataConfig) {
     const dataTypeConfig = dataConfig[dataType]
@@ -39,36 +44,36 @@ export async function readDataAsync(
       const extractedValues = extractValues(filePath)
       const extension = path.extname(filePath)
       if (extension === '.json') {
-        const data: Record<string, any> = {
+        const item: Record<string, any> = {
           order: -1,
           ...extractedValues,
           ...JSON.parse(fileContents)
         }
-        if (typeof data.id === 'undefined') {
-          data.id = path.basename(filePath, extension)
+        if (typeof item.id === 'undefined') {
+          item.id = path.basename(filePath, extension)
         }
-        const url = createUrl === null ? null : createUrl(data)
-        result[dataType].push({ ...data, url })
+        const url = createUrl === null ? null : createUrl(item)
+        result[dataType].push({ ...item, url })
         continue
       }
       const parsed = grayMatter(fileContents)
-      const data: Record<string, any> = {
+      const item: Record<string, any> = {
         order: -1,
         ...extractedValues,
         ...parsed.data
       }
-      if (typeof data.id === 'undefined') {
-        data.id = path.basename(filePath, extension)
+      if (typeof item.id === 'undefined') {
+        item.id = path.basename(filePath, extension)
       }
-      const url = createUrl === null ? null : createUrl(data)
+      const url = createUrl === null ? null : createUrl(item)
       result[dataType].push({
-        ...data,
+        ...item,
         content: parsed.content,
         toc: parseToc(parsed.content, {
           createTocText,
           dataType,
           filterToc,
-          id: data.id
+          id: item.id
         }),
         url
       })

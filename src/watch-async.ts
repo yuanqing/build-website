@@ -19,18 +19,27 @@ export async function watchAsync(minify: boolean): Promise<void> {
   async function watch(): Promise<void> {
     await build()
     const config = await readConfigAsync()
-    watcher = chokidar.watch([
-      config.cssDirectory,
+    const filePaths: Array<string> = [
       config.dataDirectory,
-      config.globalsDirectory,
-      config.jsDirectory,
-      config.mediaDirectory,
       config.templatesDirectory,
       constants.configFileName,
-      'package.json',
       'lerna.json',
+      'package.json',
       'tsconfig.json'
-    ])
+    ]
+    if (config.cssDirectory !== null) {
+      filePaths.push(config.cssDirectory)
+    }
+    if (config.globalsDirectory !== null) {
+      filePaths.push(config.globalsDirectory)
+    }
+    if (config.jsDirectory !== null) {
+      filePaths.push(config.jsDirectory)
+    }
+    if (config.mediaDirectory !== null) {
+      filePaths.push(config.mediaDirectory)
+    }
+    watcher = chokidar.watch(filePaths)
     watcher.on('ready', function (): void {
       log.info('Watching...')
     })

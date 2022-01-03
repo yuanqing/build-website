@@ -10,9 +10,9 @@ export type Config = {
     }
   >
   dataDirectory: string
-  globalsDirectory: string
+  globalsDirectory: null | string
   jsDirectory: null | string
-  mediaDirectory: string
+  mediaDirectory: null | string
   templatesDirectory: string
   filterToc: (
     text: string,

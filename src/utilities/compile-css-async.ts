@@ -6,13 +6,13 @@ import { constants } from './constants.js'
 import { Config } from './types.js'
 
 export async function compileCssAsync(
-  options: { directory: string; minify: boolean } & Pick<
+  options: { cssDirectory: string; minify: boolean } & Pick<
     Config,
     'baseUrl' | 'buildDirectory'
   >
 ): Promise<null | string> {
-  const { baseUrl, buildDirectory, directory, minify } = options
-  const entryPoint = path.join(directory, constants.cssFileName)
+  const { baseUrl, buildDirectory, cssDirectory, minify } = options
+  const entryPoint = path.join(cssDirectory, constants.cssFileName)
   if ((await fs.pathExists(entryPoint)) === false) {
     return null
   }

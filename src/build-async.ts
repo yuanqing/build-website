@@ -1,7 +1,7 @@
 import fs from 'fs-extra'
 
-import { compileAsync } from './utilities/compile-async.js'
-import { constants } from './utilities/constants.js'
+import { compileCssAsync } from './utilities/compile-css-async.js'
+import { compileJsAsync } from './utilities/compile-js-async.js'
 import { copyMediaAsync } from './utilities/copy-media-async.js'
 import { readConfigAsync } from './utilities/read-config-async/read-config-async.js'
 import { readDataAsync } from './utilities/read-data-async/read-data-async.js'
@@ -33,20 +33,24 @@ export async function buildAsync(minify: boolean): Promise<void> {
     buildDirectory: config.buildDirectory,
     mediaDirectory: config.mediaDirectory
   })
-  const cssUrl = await compileAsync({
-    baseUrl: config.baseUrl,
-    buildDirectory: config.buildDirectory,
-    directory: config.cssDirectory,
-    fileName: constants.cssFileName,
-    minify
-  })
-  const jsUrl = await compileAsync({
-    baseUrl: config.baseUrl,
-    buildDirectory: config.buildDirectory,
-    directory: config.jsDirectory,
-    fileName: constants.jsFileName,
-    minify
-  })
+  const cssUrl =
+    config.cssDirectory === null
+      ? null
+      : await compileCssAsync({
+          baseUrl: config.baseUrl,
+          buildDirectory: config.buildDirectory,
+          directory: config.cssDirectory,
+          minify
+        })
+  const jsUrl =
+    config.jsDirectory === null
+      ? null
+      : await compileJsAsync({
+          baseUrl: config.baseUrl,
+          buildDirectory: config.buildDirectory,
+          directory: config.jsDirectory,
+          minify
+        })
   const version = await readVersionAsync()
   await writeHtmlAsync({
     baseUrl: config.baseUrl,

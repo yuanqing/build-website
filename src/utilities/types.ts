@@ -1,7 +1,7 @@
 export type Config = {
   baseUrl: string
   buildDirectory: string
-  cssDirectory: string
+  cssDirectory: null | string
   data: Record<
     string,
     {
@@ -11,7 +11,7 @@ export type Config = {
   >
   dataDirectory: string
   globalsDirectory: string
-  jsDirectory: string
+  jsDirectory: null | string
   mediaDirectory: string
   templatesDirectory: string
   filterToc: (

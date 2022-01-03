@@ -5,5 +5,6 @@ export const constants = {
   defaultTemplateId: 'template',
   headerLinkClass: 'header-link',
   jsFileName: 'script.js',
+  jsTypeScriptFileName: 'script.ts',
   templatePartialsDirectoryName: 'partials'
 }

@@ -8,7 +8,7 @@ import { defaultConfig } from './default-config.js'
 export async function readConfigAsync(): Promise<Config> {
   const configFilePath = path.join(process.cwd(), constants.configFileName)
   if ((await fs.pathExists(configFilePath)) === false) {
-    throw new Error('Need a `build-website.config.js` file')
+    throw new Error(`Need a \`${constants.configFileName}\` file`)
   }
   const { default: config } = await import(configFilePath)
   return {

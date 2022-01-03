@@ -4,13 +4,13 @@ export const defaultConfig = {
   createTocText: function (text: string): string {
     return text
   },
-  cssDirectory: 'css',
+  cssDirectory: null,
   dataDirectory: 'data',
   filterToc: function () {
     return true
   },
   globalsDirectory: 'globals',
-  jsDirectory: 'js',
+  jsDirectory: null,
   mediaDirectory: 'media',
   templatesDirectory: 'templates'
 }

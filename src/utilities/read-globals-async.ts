@@ -4,12 +4,12 @@ import { globby } from 'globby'
 import path from 'path'
 
 export async function readGlobalsAsync(
-  globalsDirectory: string
+  directory: string
 ): Promise<Record<string, Record<string, any>>> {
   const result: Record<string, Record<string, any>> = {}
   const filePaths = await globby('*.json', {
     absolute: true,
-    cwd: globalsDirectory
+    cwd: directory
   })
   for (const filePath of filePaths) {
     const id = path.basename(filePath, path.extname(filePath))

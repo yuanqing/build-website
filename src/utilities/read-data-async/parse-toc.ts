@@ -12,9 +12,7 @@ export function parseToc(
   options: {
     dataType: string
     id: string
-    createTocText: Config['createTocText']
-    filterToc: Config['filterToc']
-  }
+  } & Pick<Config, 'createTocText' | 'filterToc'>
 ): string {
   const { createTocText, dataType, filterToc, id } = options
   const createSlug = createSlugFactory()

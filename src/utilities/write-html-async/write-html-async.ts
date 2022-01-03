@@ -9,21 +9,21 @@ import { renderMarkdownToHtmlAsync } from './render-markdown-to-html-async.js'
 
 const interpolateRegex = /<%=([\s\S]+?)%>/g
 
-export async function writeHtmlAsync(options: {
-  baseUrl: string
-  buildDirectory: string
-  createTocText: Config['createTocText']
-  cssUrl: null | string
-  data: Record<string, Array<Record<string, any>>>
-  filterToc: Config['filterToc']
-  globals: Record<string, Record<string, any>>
-  jsUrl: null | string
-  media: Record<string, string>
-  minify: boolean
-  partials: Record<string, string>
-  templates: Record<string, string>
-  version: null | string
-}): Promise<void> {
+export async function writeHtmlAsync(
+  options: {
+    baseUrl: string
+    buildDirectory: string
+    cssUrl: null | string
+    data: Record<string, Array<Record<string, any>>>
+    globals: Record<string, Record<string, any>>
+    jsUrl: null | string
+    media: Record<string, string>
+    minify: boolean
+    partials: Record<string, string>
+    templates: Record<string, string>
+    version: null | string
+  } & Pick<Config, 'createTocText' | 'filterToc'>
+): Promise<void> {
   const {
     baseUrl,
     buildDirectory,
@@ -97,7 +97,7 @@ export async function writeHtmlAsync(options: {
       const rendered = lodashTemplate(template)({
         ...interpolatedData,
         content: renderedContent,
-        include: function (partialName: string) {
+        partial: function (partialName: string) {
           return lodashTemplate(partials[partialName])({
             ...interpolatedData,
             content: renderedContent,

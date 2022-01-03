@@ -9,12 +9,12 @@ import { visit } from 'unist-util-visit'
 import { createSlugFactory } from '../create-slug-factory.js'
 import { Config } from '../types'
 
-export function rehypeAddHeaderIds(options: {
-  createTocText: Config['createTocText']
-  dataType: string
-  filterToc: Config['filterToc']
-  id: string
-}) {
+export function rehypeAddHeaderIds(
+  options: {
+    dataType: string
+    id: string
+  } & Pick<Config, 'createTocText' | 'filterToc'>
+) {
   const { createTocText, dataType, filterToc, id } = options
   return (tree: Node) => {
     const createSlug = createSlugFactory()

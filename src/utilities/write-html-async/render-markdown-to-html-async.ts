@@ -17,11 +17,9 @@ import { rehypeAddHeaderIds } from './rehype-add-header-ids.js'
 export async function renderMarkdownToHtmlAsync(
   content: string,
   options: {
-    createTocText: Config['createTocText']
     dataType: string
-    filterToc: Config['filterToc']
     id: string
-  }
+  } & Pick<Config, 'createTocText' | 'filterToc'>
 ): Promise<string> {
   const { createTocText, dataType, filterToc, id } = options
   const processor = unified()

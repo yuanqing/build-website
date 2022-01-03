@@ -7,11 +7,14 @@ export async function copyMediaAsync(
   options: Pick<Config, 'baseUrl' | 'buildDirectory' | 'mediaDirectory'>
 ): Promise<void> {
   const { baseUrl, buildDirectory, mediaDirectory } = options
+  if ((await fs.pathExists(mediaDirectory)) === false) {
+    return
+  }
   const outputDirectory = path.join(
     process.cwd(),
     buildDirectory,
     baseUrl,
     mediaDirectory
   )
-  await fs.copy(path.join(process.cwd(), mediaDirectory), outputDirectory)
+  await fs.copy(mediaDirectory, outputDirectory)
 }

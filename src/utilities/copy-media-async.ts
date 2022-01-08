@@ -17,7 +17,12 @@ export async function copyMediaAsync(
     cwd: mediaDirectory
   })
   for (const filePath of filePaths) {
-    const outputFilePath = path.join(buildDirectory, mediaDirectory, filePath)
+    const outputFilePath = path.join(
+      buildDirectory,
+      baseUrl,
+      mediaDirectory,
+      filePath
+    )
     await fs.copy(path.join(mediaDirectory, filePath), outputFilePath)
     const id = path.basename(filePath, path.extname(filePath))
     const url = path.join(baseUrl, mediaDirectory, filePath)

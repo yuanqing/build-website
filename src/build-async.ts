@@ -63,6 +63,7 @@ export async function buildAsync(minify: boolean): Promise<void> {
     media,
     minify,
     partials,
+    rehypePrettyCodeTheme: config.rehypePrettyCodeTheme,
     templates,
     version
   })

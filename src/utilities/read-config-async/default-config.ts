@@ -12,5 +12,6 @@ export const defaultConfig = {
   globalsDirectory: 'globals',
   jsDirectory: 'js',
   mediaDirectory: 'media',
+  rehypePrettyCodeTheme: null,
   templatesDirectory: 'templates'
 }

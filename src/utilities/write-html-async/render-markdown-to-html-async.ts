@@ -2,7 +2,7 @@ import { Element } from 'hast'
 import { headingRank } from 'hast-util-heading-rank'
 import { toString } from 'hast-util-to-string'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import rehypeHighlightJs from 'rehype-highlight'
+import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeStringify from 'rehype-stringify'
 import remarkExternalLinks from 'remark-external-links'
 import remarkGfm from 'remark-gfm'
@@ -19,9 +19,10 @@ export async function renderMarkdownToHtmlAsync(
   options: {
     dataType: string
     id: string
-  } & Pick<Config, 'createTocText' | 'filterToc'>
+  } & Pick<Config, 'createTocText' | 'filterToc' | 'rehypePrettyCodeTheme'>
 ): Promise<string> {
-  const { createTocText, dataType, filterToc, id } = options
+  const { createTocText, dataType, filterToc, id, rehypePrettyCodeTheme } =
+    options
   const processor = unified()
   processor.use(remarkParse)
   processor.use(remarkGfm)
@@ -50,9 +51,19 @@ export async function renderMarkdownToHtmlAsync(
       return filterToc(text, { dataType, id, level }) === true
     }
   })
-  processor.use(rehypeHighlightJs, {
-    subset: false
-  })
+  if (rehypePrettyCodeTheme !== null) {
+    processor.use(rehypePrettyCode, {
+      onVisitHighlightedLine(node) {
+        node.properties.className.push('line--highlighted')
+      },
+      onVisitLine(node) {
+        if (node.children.length === 0) {
+          node.children = [{ type: 'text', value: ' ' }]
+        }
+      },
+      theme: rehypePrettyCodeTheme
+    })
+  }
   processor.use(rehypeStringify, {
     allowDangerousHtml: true
   })

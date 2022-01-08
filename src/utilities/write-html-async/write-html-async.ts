@@ -22,7 +22,7 @@ export async function writeHtmlAsync(
     partials: Record<string, string>
     templates: Record<string, string>
     version: null | string
-  } & Pick<Config, 'createTocText' | 'filterToc'>
+  } & Pick<Config, 'createTocText' | 'filterToc' | 'rehypePrettyCodeTheme'>
 ): Promise<void> {
   const {
     baseUrl,
@@ -36,6 +36,7 @@ export async function writeHtmlAsync(
     media,
     minify,
     partials,
+    rehypePrettyCodeTheme,
     templates,
     version
   } = options
@@ -82,7 +83,8 @@ export async function writeHtmlAsync(
         createTocText,
         dataType,
         filterToc,
-        id
+        id,
+        rehypePrettyCodeTheme
       }
       const renderedContent = await renderMarkdownToHtmlAsync(
         lodashTemplate(content, { interpolate: interpolateRegex })(

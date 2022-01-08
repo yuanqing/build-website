@@ -1,6 +1,14 @@
 export type Config = {
   baseUrl: string
   buildDirectory: string
+  createTocText: (
+    text: string,
+    options: {
+      dataType: string
+      id: string
+      level: number
+    }
+  ) => string
   cssDirectory: null | string
   data: Record<
     string,
@@ -10,10 +18,6 @@ export type Config = {
     }
   >
   dataDirectory: string
-  globalsDirectory: null | string
-  jsDirectory: null | string
-  mediaDirectory: null | string
-  templatesDirectory: string
   filterToc: (
     text: string,
     options: {
@@ -22,12 +26,9 @@ export type Config = {
       level: number
     }
   ) => boolean
-  createTocText: (
-    text: string,
-    options: {
-      dataType: string
-      id: string
-      level: number
-    }
-  ) => string
+  globalsDirectory: null | string
+  jsDirectory: null | string
+  mediaDirectory: null | string
+  rehypePrettyCodeTheme: null | string | Record<string, string>
+  templatesDirectory: string
 }
